@@ -1,0 +1,23 @@
+#!/bin/bash
+#BASH prompt
+
+source ~/.bash_colors
+
+prompt_command () {
+	local rts=$?
+
+	processes=$(ps -U ecool -u ecool u | wc -l)
+	history -a
+
+	if [[ $rts = "0" ]]
+	then p="\[\033[1;30m\]>\[\033[0;32m\]>\[\033[1;32m\]>\[\033[m\]"
+	else p="\[\033[1;30m\]>\[\033[0;31m\]>\[\033[1;31m\]>\[\033[m\]"
+	fi
+
+	PS1part1="$Grey┌[$BBlue\u$BWhite@$IPurple\H$Grey]-[$BYellow$processes$BWhite:$BYellow\j$Grey]-[$IYellow!$IGreen\!$Grey]-[$White\D{%I:%M%P}$Grey]-[$IGreen\w\a$Grey] \n"
+	PS1part2="$Grey└[$IBlue\$$Grey] ╼$p $Color_Off"
+
+	PS1="$PS1part1$PS1part2"
+}
+PROMPT_COMMAND=prompt_command
+
